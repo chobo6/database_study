@@ -91,6 +91,151 @@ SELECT distinct job, deptno FROM EMP;
 --SELECT distinct(job), deptno FROM EMP;
 
 
+/*******************************************/
+조건 WHERE 절
+필터링, 원하는 조건에 따라 조회
+
+SELECT ...
+FROM ...
+WHERE ... ;
+
+SELECT *
+FROM emp;
+
+SELECT *
+FROM emp
+WHERE sal > 2500;   --sal 값이 2500 초과하는 직원의 모든 정보 조회
+
+SELECT ename
+FROM emp
+WHERE sal > 2500;  --sal 값이 2500 초과하는 직원의 이름 조회
+
+SELECT *
+FROM emp
+where job = 'SALESMAN'; --직업 세일즈맨인 사람만 조회
+
+select *
+from emp
+where deptno = 10; --부서번호가 10번인 사원들 정보
+
+select *
+from emp
+where deptno <> 10;
+--where deptno != 10;
+--부서번호 10번이 아닌 사원들 정보
+
+select *
+from student 
+--where weight >= 55; --55kg 이상
+--where weight >= 55 and weight <= 70; -- 55kg <= <= 70kg
+where weight BETWEEN 55 AND 70;
+
+SELECT *
+FROM student  -- 1~3학년까지만 조회
+--where grade >=1 and grade <= 3;
+--WHERE grade BETWEEN 1 AND 3;
+--where grade = 1 OR grade = 2 OR grade = 3;
+--where grade <> 4;  -- grade != 4  
+where grade IN (1,2,3);
+
+
+select *
+from student   --2학년 4학년 만 조회
+--where grade IN (2,4);
+--where grade=2 OR grade=4;
+--where grade!=1 AND grade<>3;
+where grade NOT IN (1,3);
+
+
+LIKE 패턴 검색(문자)
+    % : 0~n개 아무갯수
+    _ : 그 위치에 한개
+
+select *
+from emp
+--where ename LIKE '%M%';  --'123M131'  'M123123'  '12312M'
+--where ename LIKE 'M%';
+--where ename LIKE '%N';
+--where ename LIKE '_M%';  -- SMITH
+where ename LIKE '__M%';   -- JAMES   
+-- title LIKE '%울타리%'
+
+select *
+from emp
+--where comm is null;
+where comm is not null;
+
+날짜비교
+1201
+1221
+미래일수록 큰 값
+과거일수록 작은 값
+
+select *
+from emp  --테이블정보 팝업설명 단축키 : Shift + F4
+--where hiredate = '81/05/01';  
+--where hiredate = '1981-05-01';  -- YYYY-MM-DD
+--where hiredate > '80/08/20';
+where hiredate <= '1981-04-05';
+
+--desc emp;
+
+--80/12/17
+
+/*******************************************/
+정렬 order by
+단순 조회 -> 정렬을 명시하지 않으면 순서보장X
+ORDER BY 정렬기준컬럼명 [ASC|DESC] [오름차순|내림차순]
+
+SELECT ...
+FROM ...
+WHERE ...
+ORDER BY ...
+
+SELECT ...
+FROM ...
+ORDER BY ...
+;
+
+select *
+from student
+order by name ASC;   
+--order by name;   --기본 ASC 오름차순
+
+--내림차순 DESC
+select *
+from student
+order by name desc;   
+
+--학생들 학년기준으로 내림차순 -> 이름, 학년
+select name, grade
+from student
+order by grade desc;
+
+--student 학생테이블에서 1,2,3학년 중 키순으로 내림차순 정보 조회
+select *
+from student
+where grade IN (1,2,3)
+order by height desc;
+
+select *
+from student
+where grade IN (1,2,3)
+order by grade, height desc;
+
+select *
+from student
+where grade IN (1,2,3)
+order by height, grade desc;
+
+select *
+from student
+--order by birthday;
+--order by birthday asc;
+order by birthday desc;
+
+
+
 
 
 
