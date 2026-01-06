@@ -241,7 +241,117 @@ where A.emp_type = B.emp_type
 AND A.pay < B.avg_pay;
     
     
+
+/*******************************/
+ROWNUM 활용
     
+select 
+    ROWNUM,
+    CEIL(ROWNUM / 3),
+    studno,
+    name,
+    grade,
+    height
+from student
+order by height desc;
     
+select ROWNUM, rn, team, studno, name
+from (
+    select 
+        ROWNUM rn,
+        CEIL(ROWNUM / 3) team,
+        studno,
+        name,
+        grade,
+        height
+    from student
+    order by height desc
+    );
     
+
+
+
+--그냥 5명
+select ROWNUM, studno, name, height
+from student
+where ROWNUM <= 5;
+
+-- 키 큰사람 5명
+select ROWNUM, studno, name, height
+from student
+where ROWNUM <= 5   --기존 ROWNUM으로 인식해서 다른 결과가 조회
+order by height desc; 
+
+
+--키순으로 정렬된 테이블 상태를 기준으로 다시 ROWNUM으로 인식해서 키큰사람 5명 조회
+select ROWNUM, studno, name, height 
+from (
+    select studno, name, height
+    from student
+    order by height desc
+    )
+WHERE ROWNUM <= 5;
+
+
+-- 팀 3팀 조회 안되는 케이스
+select 
+        ROWNUM rn,
+        CEIL(ROWNUM / 3) team,
+        studno,
+        name,
+        grade,
+        height
+    from student
+    where CEIL(ROWNUM / 3) = 3;
     
+select *
+from (
+        select 
+                ROWNUM rn,
+                CEIL(ROWNUM / 3) team,
+                studno,
+                name,
+                grade,
+                height
+            from student)
+where team = 3;
+
+
+/***********************************/
+집계 group by  -> 서브쿼리, Join
+
+부서번호, 부서별 최대급여, 부서명
+select deptno, MAX(sal)
+from emp
+group by deptno;
+
+select * from dept;
+
+--groupby집계 -> JOIN
+select e.deptno, e.max_sal, d.dname
+from
+(select deptno, MAX(sal) max_sal
+from emp
+group by deptno) e, dept d
+where e.deptno = d.deptno;
+
+--groupby집계 -> select subquery
+select 
+    e.deptno, 
+    e.max_sal, 
+    (select d.dname 
+        from dept d 
+        where d.deptno = e.deptno) dname
+from
+(select deptno, MAX(sal) max_sal
+from emp
+group by deptno) e;
+
+-- JOIN -> group by 집계
+
+select deptno, dname, MAX(sal)
+from (
+    select e.deptno, e.sal, d.dname
+    from emp e, dept d
+    where e.deptno = d.deptno )
+group by deptno, dname;
