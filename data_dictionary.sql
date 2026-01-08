@@ -1,0 +1,36 @@
+/******************************/
+데이터 딕셔너리
+오라클 DB에 관련된 각종 정보를 확인할 수 있는 사전
+
+접근 자료 구분
+
+USER_   : 현재 로그인한 사용자가 소유한 객체 정보 조회
+ALL_    : 현재 로그인한 사용자가 볼수 있는 모든 객체 정보 조회
+DBA_    : DB 관리자 계정에서 DB 모든 객체 정보 조회
+
+
+SELECT * FROM USER_TABLES;
+SELECT * FROM ALL_TABLES;
+--SELECT * FROM DBA_TABLES; 
+
+SELECT * FROM USER_VIEWS;
+SELECT * FROM USER_SEQUENCES;
+SELECT * FROM USER_OBJECTS;
+SELECT * FROM USER_CONSTRAINTS;
+SELECT * FROM USER_CONS_COLUMNS;
+SELECT * FROM USER_INDEXES;
+SELECT * FROM USER_IND_COLUMNS;
+
+SELECT * FROM ALL_USERS;
+SELECT * FROM USER_ROLE_PRIVS;
+
+--테이블 정보 이름 조회시 사용
+SELECT * FROM TAB;
+
+SELECT * FROM TAB
+WHERE TNAME LIKE '%DEPT%';
+
+SELECT * FROM DEPT3;
+
+
+
